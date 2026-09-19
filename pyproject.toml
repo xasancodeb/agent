@@ -3,19 +3,24 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lazarus-drill"
+name = "heisenbug"
 version = "0.1.0"
-description = "An agent that proves your backups actually restore."
+description = "Find out why a test is flaky, instead of retrying it."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "anthropic>=0.69",
     "pydantic>=2.0",
-    "PyYAML>=6.0",
+    "pytest>=7.0",
 ]
 
 [project.scripts]
-lazarus = "lazarus.cli:main"
+heisenbug = "heisenbug.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["lazarus*"]
+include = ["heisenbug*"]
+
+[tool.pytest.ini_options]
+# Only this project's own tests. examples/flaky_suite contains deliberately
+# unreliable tests and is never collected from here.
+testpaths = ["tests"]
